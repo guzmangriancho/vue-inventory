@@ -18,12 +18,19 @@
 </template>
 
 <script>
+import { onMounted } from "vue";
 import ProductList from "./components/ProductList.vue";
+import { initInventory } from "./store/inventory";
 
 export default {
 	name: "App",
 	components: {
 		ProductList,
+	},
+	setup() {
+		onMounted(() => {
+			initInventory();
+		});
 	},
 };
 </script>

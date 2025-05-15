@@ -1,24 +1,33 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Entorno virtual Python
+/backend/venv/
+/frontend/venv/
+/*.venv/
+/venv/
+/ENV/
+/env/
 
-node_modules
-dist
-dist-ssr
-*.local
+# Bytecode de Python
+**/__pycache__/
+**/*.py[cod]
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Bases de datos locales
+/backend/products.db
+/*.db
+
+# Configs de VS Code
+/.vscode/
+
+# Dependencias de Node
+/frontend/node_modules/
+
+# Archivos de build
+/frontend/dist/
+/backend/*.egg-info/
+
+# Variables de entorno
+*.env
+.env.*
+
+# Archivos de sistema
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db

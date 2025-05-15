@@ -14,7 +14,13 @@
 			</span>
 		</td>
 		<td class="action">
-			<button class="btn-decrement" @click="decrementStock">-</button>
+			<button
+				class="btn-decrement"
+				@click="decrementStock"
+				:disabled="!product.disponible"
+			>
+				-
+			</button>
 			<button class="btn-increment" @click="incrementStock">+</button>
 		</td>
 	</tr>
@@ -33,12 +39,10 @@ export default {
 	},
 	methods: {
 		decrementStock() {
-			const newStock = this.product.stock > 0 ? this.product.stock - 1 : 0;
-			updateStock(this.product.id, newStock);
+			updateStock(this.product.id, -1);
 		},
 		incrementStock() {
-			const newStock = this.product.stock + 1;
-			updateStock(this.product.id, newStock);
+			updateStock(this.product.id, +1);
 		},
 	},
 };
@@ -57,5 +61,10 @@ export default {
 
 .btn-decrement {
 	margin-right: 0.5rem;
+}
+
+button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 </style>
