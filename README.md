@@ -7,8 +7,8 @@ Este repositorio contiene dos proyectos independientes que conforman una tienda 
 
 En cada carpeta encontrarás un archivo con las respuestas teóricas de la correspondiente práctica:
 
-- **frontend/front.md**: respuestas sobre reactividad en Vue (Práctica de frontend).
-- **backend/back.md**: respuestas sobre GraphQL y Flask (Práctica de backend).
+- [frontend/front.md](frontend/front.md): respuestas sobre reactividad en Vue (Práctica de frontend).  
+- [backend/back.md](backend/back.md): respuestas sobre GraphQL y Flask (Práctica de backend).
 
 ---
 
