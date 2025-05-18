@@ -68,6 +68,20 @@ En cada carpeta encontrarás un archivo con las respuestas teóricas de la corre
 - La API GraphQL estará disponible en:
   `http://localhost:5000/graphql`
 
+- Esta query sirve para leer todos los productos de la bbdd:
+- 
+  ```bash
+     query GetProductos {
+     products {
+       id
+       nombre
+       precio
+       stock
+       disponible
+     }
+   }
+   ```
+
 ### Frontend
 
 En otra terminal, desde la carpeta `frontend`:
