@@ -1,57 +1,39 @@
-# schema.py
 import graphene
-from graphene_sqlalchemy import SQLAlchemyObjectType
-from models import Product as ProductModel
-from database import SessionLocal
+from data import productos, get_all_products, update_stock
 
-class ProductType(SQLAlchemyObjectType):
-    class Meta:
-        model = ProductModel
-        fields = ("id", "nombre", "precio", "stock", "disponible")
+class producttype(graphene.ObjectType):
+    id = graphene.Int()
+    nombre = graphene.String()
+    precio = graphene.Float()
+    stock = graphene.Int()
+    disponible = graphene.Boolean()
 
-class Query(graphene.ObjectType):
-    products = graphene.List(ProductType)
+class query(graphene.ObjectType):
+    products = graphene.List(producttype)
 
     def resolve_products(self, info):
-        db = SessionLocal()
-        all_products = db.query(ProductModel).all()
-        db.close()
-        return all_products
+        return [producttype(**p) for p in get_all_products()]
 
-class UpdateStock(graphene.Mutation):
+class updatestock(graphene.Mutation):
     class Arguments:
         id = graphene.Int(required=True)
         delta = graphene.Int(required=True)
 
-    product = graphene.Field(ProductType)
+    product = graphene.Field(producttype)
 
     def mutate(self, info, id, delta):
-        db = SessionLocal()
-        prod = db.get(ProductModel, id)
-        if not prod:
-            db.close()
-            raise Exception(f"Producto con id={id} no encontrado")
-        prod.stock = max(prod.stock + delta, 0)
-        prod.disponible = prod.stock > 0
-        db.add(prod)
-        db.commit()
-        db.refresh(prod)
-        db.close()
-        return UpdateStock(product=prod)
+        prod = update_stock(id, delta)
+        return updatestock(product=producttype(**prod))
 
-class ClearProducts(graphene.Mutation):
+class clearproducts(graphene.Mutation):
     ok = graphene.Boolean()
 
     def mutate(self, info):
-        db = SessionLocal()
-        # Borra todas las filas de la tabla products
-        db.query(ProductModel).delete()
-        db.commit()
-        db.close()
-        return ClearProducts(ok=True)
+        productos.clear()
+        return clearproducts(ok=True)
 
-class Mutation(graphene.ObjectType):
-    update_stock = UpdateStock.Field()
-    clear_products  = ClearProducts.Field()
+class mutation(graphene.ObjectType):
+    update_stock = updatestock.Field()
+    clear_products = clearproducts.Field()
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = graphene.Schema(query=query, mutation=mutation)

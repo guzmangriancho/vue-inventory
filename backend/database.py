@@ -1,16 +1,14 @@
-# database.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "sqlite:///./products.db"
+database_url = "sqlite:///./products.db"
 
-engine = create_engine(
-    DATABASE_URL, connect_args={"check_same_thread": False}
-)
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
-Base = declarative_base()
+# engine y sesion
+engine = create_engine(database_url, connect_args={"check_same_thread": False})
+sessionlocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+base = declarative_base()
 
 def init_db():
-    # importa tus modelos para que SQLAlchemy los conozca
-    import models  
-    Base.metadata.create_all(bind=engine)
+    # crea tablas si no hay
+    import models
+    base.metadata.create_all(bind=engine)
